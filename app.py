@@ -43,7 +43,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(response.encode())
 
         elif parsed_path.path == user_prefix + '/logout/':
-            current_user = None
+            # current_user = None
             self.send_response(302)
             self.send_header("Location", "/")
             self.end_headers()
