@@ -26,7 +26,7 @@ def login_view(text_response=""):
 
 
 
-def contacts_view(contact_list, username):
+def contacts_view(contact_list, username, prefix):
     html = f"""
     <html>
     <head>
@@ -35,12 +35,12 @@ def contacts_view(contact_list, username):
     <body>
         <h1>Contact List</h1>
                     <h2>Hello, {username}</h2>
-                    <a href="/logout/">Log-out</a>
+                    <a href="{prefix}/logout/">Log-out</a>
                     <br><br><br>
         <table>
             <tr>
-                <th><a href="/?sorting=name">Name</a></th>
-                <th><a href="/?sorting=email">Email</a></th>
+                <th><a href="{prefix}/?sorting=name">Name</a></th>
+                <th><a href="{prefix}/?sorting=email">Email</a></th>
                 <th>Phone</th>
                 <th>Actions</th>
             </tr>
@@ -53,16 +53,16 @@ def contacts_view(contact_list, username):
                 <td>{}</td>
                 <td>{}</td>
                 <td>
-                    <a href="/edit_contact/{}">Edit</a>
-                    <a href="/delete_contact/{}">Delete</a>
+                    <a href="{}/edit_contact/{}">Edit</a>
+                    <a href="{}/delete_contact/{}">Delete</a>
                 </td>
             </tr>
-        """.format(contact.name, contact.email, contact.phone, contact.id, contact.id)
+        """.format(contact.name, contact.email, contact.phone, prefix, contact.id, prefix,contact.id)
 
-    html += """
+    html += f"""
         </table>
         <h2>Add New Contact</h2>
-        <form method="post" action="/add_contact">
+        <form method="post" action="{prefix}/add_contact">
             <label>Name: <input type="text" name="name" required></label><br>
             <label>Email: <input type="text" name="email"></label><br>
             <label>Phone: <input type="text" name="phone"></label><br>
@@ -76,7 +76,7 @@ def contacts_view(contact_list, username):
 
 
 
-def contacts_edit_view(contact):
+def contacts_edit_view(contact,prefix):
     html = """
     <html>
     <head>
@@ -84,7 +84,7 @@ def contacts_edit_view(contact):
     </head>
     <body>
         <h1>Edit Contact</h1>
-        <form method="post" action="/edit_contact/{}">
+        <form method="post" action="{}/edit_contact/{}">
             <label>Name: <input type="text" name="name" value="{}"></label><br>
             <label>Email: <input type="text" name="email" value="{}"></label><br>
             <label>Phone: <input type="text" name="phone" value="{}"></label><br>
@@ -92,7 +92,7 @@ def contacts_edit_view(contact):
         </form>
     </body>
     </html>
-    """.format(contact.id, contact.name, contact.email, contact.phone)
+    """.format(prefix,contact.id, contact.name, contact.email, contact.phone)
 
     return html
 
